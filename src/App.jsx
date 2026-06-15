@@ -51,13 +51,24 @@ function Sidebar() {
     <div className="sidebar">
       <div className="sidebar-logo-area">
         <div className="sidebar-logo">
-          <img
-            src="https://www.lumaxworld.in/images/main-logo.svg"
-            alt="Lumax Group"
-            onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
-          />
-          <div style={{ display: 'none', alignItems: 'center', color: 'var(--lumax-red)', fontWeight: 800, fontSize: '1.4rem', fontFamily: 'var(--font-sans)' }}>LUMAX</div>
+          <div className="brand-row">
+            <img
+              src="https://www.lumaxworld.in/images/main-logo.svg"
+              alt="Lumax Group"
+              onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+            />
+          </div>
           <span className="sidebar-product-name">Spend Cube</span>
+        </div>
+        <div className="powered-by sidebar-powered-by">
+          <span>Powered by</span>
+          <a href="/">
+            <img
+              src="https://amlgolabs.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo21march.9d40d63c.png&w=640&q=75"
+              alt="AMLGO LABS"
+              className="powered-by-logo"
+            />
+          </a>
         </div>
       </div>
 

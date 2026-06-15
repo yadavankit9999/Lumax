@@ -147,6 +147,7 @@ body {
   padding: 1.5rem 1.5rem 1.25rem;
   border-bottom: 1px solid var(--border-default);
   background: rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 .sidebar-logo {
@@ -156,11 +157,44 @@ body {
   gap: 0.5rem;
 }
 
+.sidebar-logo .brand-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
 .sidebar-logo img {
   height: 52px;
   width: auto;
   object-fit: contain;
   filter: brightness(1.05);
+}
+
+.sidebar-powered-by {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.sidebar-powered-by span {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sidebar-powered-by .powered-by-logo {
+  height: 13px;
+  width: auto;
+  object-fit: contain;
 }
 
 .sidebar-product-name {
