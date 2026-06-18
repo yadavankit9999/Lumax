@@ -422,6 +422,30 @@ export function getDefectData() {
 // ─── Universal Alert Center ────────────────────────────────────────────────
 export function getAlerts() {
   return [
+    {
+      "id": 101, "level": "L3", "severity": "High", "type": "AI Insight", "aiAlert": true, "aiType": "consolidation",
+      "message": "Supplier consolidation is possible — Connector terminals",
+      "dashboard": "/ai-supplier-consolidation", "time": "Just now",
+      "details": {
+        "subCategory": "Connector terminals", "category": "Electricals", "severity": "High",
+        "message": "The Connector terminals sub-category under Electricals currently has 6 active suppliers in a single sub-category — above the 5-supplier threshold. The AI recommends consolidating to 3 suppliers, with an estimated saving of ~₹5.0 Cr in FY27.",
+        "currentBase": 6, "recommendedBase": 3, "spend": "48 Cr", "saving": "5.0 Cr",
+        "trigger": "More than 5 suppliers in one sub-category",
+        "owner": "Category Manager - Electricals"
+      }
+    },
+    {
+      "id": 102, "level": "L3", "severity": "High", "type": "AI Insight", "aiAlert": true, "aiType": "variance",
+      "message": "Same part priced differently across plants — Connector terminals",
+      "dashboard": "/ai-part-price-variance", "time": "2m ago",
+      "details": {
+        "subCategory": "Connector terminals", "category": "Electricals", "severity": "High",
+        "message": "In Connector terminals (Electricals), 26 of 128 SKUs are priced differently across plants for the same part and supplier. For example, CT-1042 costs ₹57 at Chakan but only ₹50 at Bawal — a 14% gap with no justification. Levelling every plant to each part's lowest validated price recovers ~₹28 L in FY27.",
+        "skusAnalysed": 128, "skusWithGap": 26, "spend": "48 Cr", "saving": "28 L",
+        "trigger": "Same part supplied at different prices across plants / suppliers",
+        "owner": "Category Manager - Electricals"
+      }
+    },
     {"id": 1, "level": "L3", "severity": "Critical", "type": "Spend Budget Breach",
      "message": "Raw Materials spend exceeded budget by 8.3%", "dashboard": "/spend-overview", "time": "2h ago"},
     {"id": 2, "level": "L3", "severity": "Critical", "type": "Supplier Rating Drop",
@@ -439,4 +463,70 @@ export function getAlerts() {
     {"id": 8, "level": "L0", "severity": "Info", "type": "Price Variation Alert",
      "message": "LME Aluminum down 0.8% — ₹3 Cr potential saving", "dashboard": "/commodity-trends", "time": "12h ago"},
   ];
+}
+
+// ─── AI Insights Data ──────────────────────────────────────────────────────
+export function getSupplierConsolidation() {
+  return {
+    summary: {
+      flaggedCategories: 6,
+      currentBase: 40,
+      recommendedBase: 21,
+      potentialSaving: "18 Cr"
+    },
+    categorySummary: [
+      { subCategory: "Connector / terminal", category: "Electricals", currentBase: 6, recommendedBase: 3, spend: "48 Cr", saving: "5.0 Cr" },
+      { subCategory: "Resistor", category: "Electronics", currentBase: 7, recommendedBase: 4, spend: "31 Cr", saving: "3.1 Cr" },
+      { subCategory: "Packing (C-Box)", category: "Packaging", currentBase: 7, recommendedBase: 4, spend: "26 Cr", saving: "2.6 Cr" },
+      { subCategory: "Chemical", category: "Chemicals", currentBase: 7, recommendedBase: 4, spend: "18 Cr", saving: "2.4 Cr" },
+      { subCategory: "Copper wire", category: "Electricals", currentBase: 7, recommendedBase: 4, spend: "16 Cr", saving: "1.9 Cr" },
+      { subCategory: "Bare PCB", category: "Electronics", currentBase: 6, recommendedBase: 3, spend: "14 Cr", saving: "1.6 Cr" }
+    ],
+    deepDive: {
+      "Connector / terminal": [
+        { supplier: "Supplier A", sow: "19.2 Cr (40%)", rating: "Green", action: "Retain" },
+        { supplier: "Supplier B", sow: "14.9 Cr (31%)", rating: "Green", action: "Retain" },
+        { supplier: "Supplier C", sow: "5.8 Cr (12%)", rating: "Yellow", action: "Retain" },
+        { supplier: "Supplier D", sow: "4.3 Cr (9%)", rating: "Yellow", action: "Exit" },
+        { supplier: "Supplier E", sow: "2.4 Cr (5%)", rating: "Red", action: "Exit" },
+        { supplier: "Supplier F", sow: "1.4 Cr (3%)", rating: "Red", action: "Exit" }
+      ],
+      "Resistor": [
+        { supplier: "Supplier P", sow: "12.4 Cr (40%)", rating: "Green", action: "Retain" },
+        { supplier: "Supplier Q", sow: "9.0 Cr (29%)", rating: "Green", action: "Retain" },
+        { supplier: "Supplier R", sow: "4.6 Cr (15%)", rating: "Yellow", action: "Retain" },
+        { supplier: "Supplier S", sow: "2.8 Cr (9%)", rating: "Yellow", action: "Exit" },
+        { supplier: "Supplier T", sow: "1.5 Cr (5%)", rating: "Red", action: "Exit" },
+        { supplier: "Supplier U", sow: "0.7 Cr (2%)", rating: "Red", action: "Exit" }
+      ]
+    }
+  };
+}
+
+export function getPartPriceVariance() {
+  return {
+    summary: {
+      flaggedCategories: 6,
+      skusAnalysed: 467,
+      skusWithGap: 101,
+      potentialSaving: "99 L"
+    },
+    categorySummary: [
+      { subCategory: "Connector terminals", category: "Electronics", skusAnalysed: 128, skusWithGap: 26, highestGap: "14%", saving: "28 L" },
+      { subCategory: "Resistor", category: "Electronics", skusAnalysed: 96, skusWithGap: 18, highestGap: "11%", saving: "19 L" },
+      { subCategory: "Cartons", category: "Packaging", skusAnalysed: 74, skusWithGap: 15, highestGap: "12%", saving: "16 L" },
+      { subCategory: "Bolts", category: "Fasteners", skusAnalysed: 68, skusWithGap: 13, highestGap: "9%", saving: "12 L" },
+      { subCategory: "Hoses", category: "Rubber", skusAnalysed: 54, skusWithGap: 11, highestGap: "10%", saving: "9 L" },
+      { subCategory: "Wire harness", category: "Electricals", skusAnalysed: 47, skusWithGap: 9, highestGap: "8%", saving: "7 L" }
+    ],
+    deepDive: {
+      "Connector terminals": [
+        { sku: "CT-1042 2-pin housing", supplier: "Supplier A", bawal: 50, manesar: 52, gurgaon: 52, chakan: 57, minPrice: 50, annualQty: "1.8 L", saving: "6.8 L" },
+        { sku: "CT-1078 6-pin connector", supplier: "Supplier B", bawal: 38, manesar: 40, gurgaon: 40, chakan: 43, minPrice: 38, annualQty: "1.2 L", saving: "4.2 L" },
+        { sku: "CT-1130 terminal pin", supplier: "Supplier A", bawal: 16, manesar: 17, gurgaon: 17, chakan: 18.5, minPrice: 16, annualQty: "2.5 L", saving: "3.8 L" },
+        { sku: "CT-1205 sealed cap", supplier: "Supplier C", bawal: 24, manesar: 25, gurgaon: 25, chakan: 27, minPrice: 24, annualQty: "0.9 L", saving: "2.0 L" },
+        { sku: "CT-1260 lock clip", supplier: "Supplier B", bawal: 9.0, manesar: 9.3, gurgaon: 9.5, chakan: 10.0, minPrice: 9.0, annualQty: "1.1 L", saving: "1.2 L" }
+      ]
+    }
+  };
 }

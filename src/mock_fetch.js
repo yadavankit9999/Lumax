@@ -25,6 +25,8 @@ if (!API_BASE) {
     '/api/v1/supplier/quality-deep-dive': mockData.getSupplierQualityDeepDive,
     '/api/v1/supplier/defects': mockData.getDefectData,
     '/api/v1/alerts': mockData.getAlerts,
+    '/api/v1/ai-insights/supplier-consolidation': mockData.getSupplierConsolidation,
+    '/api/v1/ai-insights/part-price-variance': mockData.getPartPriceVariance,
   };
 
   const originalFetch = window.fetch;

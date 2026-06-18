@@ -3,7 +3,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Treemap, LabelList
 } from 'recharts';
-import { ArrowUpRight, ArrowDownRight, Users, DollarSign, TrendingUp, AlertCircle, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Users, DollarSign, TrendingUp, AlertCircle, ShieldCheck, AlertTriangle, Sparkles, Zap, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import FilterBar from '../components/FilterBar';
 import KpiCard from '../components/KpiCard';
 
@@ -47,7 +48,10 @@ export default function SpendOverview() {
   const [exec, setExec] = useState(null);
   const [ratings, setRatings] = useState(null);
   const [categoryWise, setCategoryWise] = useState([]);
+  const [aiConsolidation, setAiConsolidation] = useState(null);
+  const [aiVariance, setAiVariance] = useState(null);
   const [filters, setFilters] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     Promise.all([
@@ -55,8 +59,11 @@ export default function SpendOverview() {
       fetch(`${API_BASE}/api/v1/executive/summary`).then(r => r.json()),
       fetch(`${API_BASE}/api/v1/supplier/ratings`).then(r => r.json()),
       fetch(`${API_BASE}/api/v1/spend/category-wise`).then(r => r.json()),
-    ]).then(([ov, ex, rt, cat]) => {
+      fetch(`${API_BASE}/api/v1/ai-insights/supplier-consolidation`).then(r => r.json()),
+      fetch(`${API_BASE}/api/v1/ai-insights/part-price-variance`).then(r => r.json()),
+    ]).then(([ov, ex, rt, cat, aiC, aiV]) => {
       setOverview(ov); setExec(ex); setRatings(rt); setCategoryWise(cat);
+      setAiConsolidation(aiC); setAiVariance(aiV);
     }).catch(console.error);
   }, []);
 
@@ -109,6 +116,69 @@ export default function SpendOverview() {
         <KpiCard id="kpi-yellow"   title="Yellow Suppliers"   value={ratings.ratingSplit.find(r=>r.rating==='Yellow')?.count||0} subtext={`${ratings.ratingSplit.find(r=>r.rating==='Yellow')?.percentage||0}% of base`} icon={<AlertTriangle size={16}/>} accentColor="#f59e0b" />
         <KpiCard id="kpi-chronic"  title="Chronic Red"        value={ratings.chronicRedSuppliers}    subtext="3+ months in Red" icon={<AlertCircle size={16}/>} accentColor="#b91c1c" />
       </div>
+
+      {/* AI Insights Summary Cards */}
+      {aiConsolidation && aiVariance && (
+        <div className="charts-grid ai-insights-row" style={{ marginTop: '1rem' }}>
+          <div className="insight-card ai-glow-border clickable-card" onClick={() => navigate('/ai-supplier-consolidation')}>
+            <div className="insight-header flex-between" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>
+                <h3 style={{ display: 'flex', alignItems: 'center' }}>
+                  <Sparkles size={16} style={{marginRight: 6, color: 'var(--lumax-red)'}}/> 
+                  AI supplier consolidation — opportunities
+                </h3>
+                <p className="insight-sub" style={{ fontSize: '0.75rem' }}>Sub-categories where supplier base can be reduced</p>
+              </div>
+              <ChevronRight size={18} color="var(--text-muted)" />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+              <div className="mini-stat">
+                <span className="mini-stat-label">Sub-categories flagged</span>
+                <span className="mini-stat-value">{aiConsolidation.summary.flaggedCategories}</span>
+              </div>
+              <div className="mini-stat">
+                <span className="mini-stat-label">Current base</span>
+                <span className="mini-stat-value">{aiConsolidation.summary.currentBase}</span>
+              </div>
+              <div className="mini-stat">
+                <span className="mini-stat-label">Recommended</span>
+                <span className="mini-stat-value" style={{ color: '#0284c7' }}>{aiConsolidation.summary.recommendedBase}</span>
+              </div>
+              <div className="mini-stat">
+                <span className="mini-stat-label">Potential saving</span>
+                <span className="mini-stat-value" style={{ color: '#16a34a' }}>~₹{aiConsolidation.summary.potentialSaving}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="insight-card ai-glow-border-zap clickable-card" onClick={() => navigate('/ai-part-price-variance')}>
+            <div className="insight-header flex-between" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>
+                <h3 style={{ display: 'flex', alignItems: 'center' }}>
+                  <Zap size={16} style={{marginRight: 6, color: '#eab308'}}/> 
+                  AI part price variance — opportunities
+                </h3>
+                <p className="insight-sub" style={{ fontSize: '0.75rem' }}>Same part priced differently across plants</p>
+              </div>
+              <ChevronRight size={18} color="var(--text-muted)" />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+              <div className="mini-stat">
+                <span className="mini-stat-label">SKUs analysed</span>
+                <span className="mini-stat-value">{aiVariance.summary.skusAnalysed}</span>
+              </div>
+              <div className="mini-stat">
+                <span className="mini-stat-label">SKUs with gap</span>
+                <span className="mini-stat-value" style={{ color: '#ef4444' }}>{aiVariance.summary.skusWithGap}</span>
+              </div>
+              <div className="mini-stat">
+                <span className="mini-stat-label">Potential savings</span>
+                <span className="mini-stat-value" style={{ color: '#16a34a' }}>~₹{aiVariance.summary.potentialSaving}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Treemap + Supplier Donut */}
       <div className="charts-grid">

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, NavLink } from 'react-router-do
 import {
   LayoutDashboard, TrendingUp, Bell, Settings, ChevronRight,
   Sun, Moon, Factory, Tag, Users, Shuffle, Globe, BarChart2,
-  ShieldCheck, MapPin, Star, Microscope, ChevronDown,
+  ShieldCheck, MapPin, Star, Microscope, ChevronDown, Sparkles, Zap
 } from 'lucide-react';
 
 import SpendOverview from './pages/SpendOverview';
@@ -17,6 +17,8 @@ import SupplierPerformance from './pages/SupplierPerformance';
 import PlantRating from './pages/PlantRating';
 import QualityDelivery from './pages/QualityDelivery';
 import QualityDeepDive from './pages/QualityDeepDive';
+import SupplierConsolidation from './pages/SupplierConsolidation';
+import PartPriceVariance from './pages/PartPriceVariance';
 import AlertPanel from './components/AlertPanel';
 import './index.css';
 
@@ -112,6 +114,15 @@ function Sidebar() {
           </NavLink>
           <NavLink to="/quality-deep-dive" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'} id="nav-quality-dive">
             <Microscope size={16} /> Quality Deep Dive
+          </NavLink>
+        </NavGroup>
+
+        <NavGroup label="AI Insights" defaultOpen>
+          <NavLink to="/ai-supplier-consolidation" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'} id="nav-ai-consolidation">
+            <Sparkles size={16} /> Supplier Consolidation
+          </NavLink>
+          <NavLink to="/ai-part-price-variance" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'} id="nav-ai-variance">
+            <Zap size={16} /> Part Price Variance
           </NavLink>
         </NavGroup>
 
@@ -229,6 +240,8 @@ function App() {
         <Route path="/plant-rating" element={layout('Plant-Level Rating', 'Supplier Performance', PlantRating)} />
         <Route path="/quality-delivery" element={layout('Quality & Delivery', 'Supplier Performance', QualityDelivery)} />
         <Route path="/quality-deep-dive" element={layout('Quality Deep Dive', 'Supplier Performance', QualityDeepDive)} />
+        <Route path="/ai-supplier-consolidation" element={layout('Supplier Consolidation', 'AI Insights', SupplierConsolidation)} />
+        <Route path="/ai-part-price-variance" element={layout('Part Price Variance', 'AI Insights', PartPriceVariance)} />
         <Route path="/alerts" element={layout('Alerts & Triggers', 'System', () => <PlaceholderPage title="Alerts & Triggers" icon={Bell} />)} />
         <Route path="/settings" element={layout('Settings', 'System', () => <PlaceholderPage title="Settings" icon={Settings} />)} />
       </Routes>

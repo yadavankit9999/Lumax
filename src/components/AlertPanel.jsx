@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, AlertTriangle, AlertCircle, Info, ChevronRight, Bell } from 'lucide-react';
+import { X, AlertTriangle, AlertCircle, Info, ChevronRight, Bell, Sparkles, Zap } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -12,6 +12,7 @@ const SEVERITY_CONFIG = {
 
 export default function AlertPanel({ isOpen, onClose }) {
   const [alerts, setAlerts] = useState([]);
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/v1/alerts`)
@@ -54,6 +55,73 @@ export default function AlertPanel({ isOpen, onClose }) {
       <div className="alert-list">
         {alerts.map((alert) => {
           const cfg = SEVERITY_CONFIG[alert.level];
+          const isExpanded = expandedId === alert.id;
+
+          if (alert.aiAlert) {
+            const Icon = alert.aiType === 'consolidation' ? Sparkles : Zap;
+            const accentColor = alert.aiType === 'consolidation' ? '#dc2626' : '#ca8a04';
+            const details = alert.details;
+
+            return (
+              <div key={alert.id} className="alert-item ai-alert-item" style={{ borderLeftColor: accentColor }}>
+                <div className="alert-item-header" style={{ cursor: 'pointer' }} onClick={() => setExpandedId(isExpanded ? null : alert.id)}>
+                  <span className="alert-item-type" style={{ color: accentColor, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Icon size={14} /> Automated AI alert
+                  </span>
+                  <span className="alert-item-time">{alert.time}</span>
+                </div>
+                
+                <h4 style={{ margin: '8px 0 4px', fontSize: '0.9rem', color: 'var(--text-primary)' }}>{alert.message}</h4>
+                
+                {isExpanded && details && (
+                  <div className="ai-alert-details" style={{ marginTop: '12px' }}>
+                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                      <span className="badge badge-gray">Sub-category: {details.subCategory}</span>
+                      <span className="badge badge-gray">Category: {details.category}</span>
+                      <span className="badge badge-red">Severity: {details.severity}</span>
+                    </div>
+                    
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4', marginBottom: '12px' }}>
+                      {details.message}
+                    </p>
+
+                    {alert.aiType === 'consolidation' && (
+                      <div className="grid-cards alert-mini-grid">
+                        <div className="mini-kpi"><span>Current</span><strong>{details.currentBase}</strong></div>
+                        <div className="mini-kpi"><span>Recommended</span><strong style={{color: '#0284c7'}}>{details.recommendedBase}</strong></div>
+                        <div className="mini-kpi"><span>Spend</span><strong>₹{details.spend}</strong></div>
+                        <div className="mini-kpi"><span>Saving</span><strong style={{color: '#16a34a'}}>~₹{details.saving}</strong></div>
+                      </div>
+                    )}
+
+                    {alert.aiType === 'variance' && (
+                      <div className="grid-cards alert-mini-grid">
+                        <div className="mini-kpi"><span>SKUs analysed</span><strong>{details.skusAnalysed}</strong></div>
+                        <div className="mini-kpi"><span>With gap</span><strong style={{color: '#ef4444'}}>{details.skusWithGap}</strong></div>
+                        <div className="mini-kpi"><span>Spend</span><strong>₹{details.spend}</strong></div>
+                        <div className="mini-kpi"><span>Saving</span><strong style={{color: '#16a34a'}}>~₹{details.saving}</strong></div>
+                      </div>
+                    )}
+
+                    <div style={{ marginTop: '16px', borderTop: '1px solid var(--border-default)', paddingTop: '12px' }}>
+                      <a href={alert.dashboard} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.8rem' }}>
+                        Click to view the alert <ChevronRight size={12} />
+                      </a>
+                    </div>
+                    
+                    <div style={{ marginTop: '16px' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: 600, display: 'block', marginBottom: '8px' }}>Update your action</span>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button className="btn-outline" style={{ fontSize: '0.75rem', padding: '4px 8px' }}>Acknowledged</button>
+                        <button className="btn-outline" style={{ fontSize: '0.75rem', padding: '4px 8px' }}>Work in progress</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          }
+
           return (
             <div
               key={alert.id}
