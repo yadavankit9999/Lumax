@@ -62,36 +62,38 @@
 /* ─── Light Theme Overrides ─── */
 [data-theme="light"] {
   /* Backgrounds */
-  --bg-deep:        #f0f2f5;
-  --bg-panel:       #ffffff;
-  --bg-card:        #ffffff;
-  --bg-card-hover:  #f8f9fb;
-  --bg-elevated:    #f4f5f7;
+  --bg-deep: #f0f2f5;
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f9fb;
+  --bg-elevated: #f4f5f7;
 
   /* Borders */
   --border-default: rgba(0, 0, 0, 0.08);
-  --border-subtle:  rgba(0, 0, 0, 0.05);
-  --border-accent:  rgba(222, 3, 3, 0.25);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-accent: rgba(222, 3, 3, 0.25);
 
   /* Typography */
-  --text-primary:   #111827;
+  --text-primary: #111827;
   --text-secondary: #374151;
-  --text-muted:     #9ca3af;
+  --text-muted: #9ca3af;
 
   /* Shadows — stronger in light mode for depth */
-  --shadow-card:  0 1px 4px rgba(0, 0, 0, 0.07), 0 4px 16px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.07), 0 4px 16px rgba(0, 0, 0, 0.05);
   --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-red:   0 4px 16px rgba(222, 3, 3, 0.18);
+  --shadow-red: 0 4px 16px rgba(222, 3, 3, 0.18);
 
   /* Status backgrounds — lighter tint in light mode */
-  --green-bg:  rgba(22, 163, 74, 0.08);
+  --green-bg: rgba(22, 163, 74, 0.08);
   --yellow-bg: rgba(217, 119, 6, 0.08);
-  --red-bg:    rgba(220, 38, 38, 0.08);
-  --blue-bg:   rgba(37, 99, 235, 0.08);
+  --red-bg: rgba(220, 38, 38, 0.08);
+  --blue-bg: rgba(37, 99, 235, 0.08);
 }
 
 /* ─── Reset ─── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -392,8 +394,17 @@ body {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
 }
 
 .user-profile {
@@ -439,10 +450,22 @@ body {
 }
 
 /* Custom scrollbar */
-.page-content::-webkit-scrollbar { width: 5px; }
-.page-content::-webkit-scrollbar-track { background: transparent; }
-.page-content::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 3px; }
-.page-content::-webkit-scrollbar-thumb:hover { background: rgba(222, 3, 3, 0.3); }
+.page-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.page-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.page-content::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+.page-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(222, 3, 3, 0.3);
+}
 
 /* ─── Page Title Block ─── */
 .page-title-block {
@@ -566,9 +589,17 @@ body {
 }
 
 /* Trend indicators */
-.trend-up { color: var(--green); }
-.trend-down { color: var(--red); }
-.trend-neutral { color: var(--yellow); }
+.trend-up {
+  color: var(--green);
+}
+
+.trend-down {
+  color: var(--red);
+}
+
+.trend-neutral {
+  color: var(--yellow);
+}
 
 /* ─── Charts Grid ─── */
 .charts-grid {
@@ -579,7 +610,9 @@ body {
 }
 
 @media (max-width: 1200px) {
-  .charts-grid { grid-template-columns: 1fr; }
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .chart-container {
@@ -669,7 +702,9 @@ body {
 }
 
 @media (max-width: 900px) {
-  .simulator-grid { grid-template-columns: 1fr; }
+  .simulator-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .sliders-container {
@@ -870,7 +905,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── Divider with label ─── */
@@ -910,15 +947,33 @@ body {
 
 /* ─── Responsive ─── */
 @media (max-width: 1024px) {
-  :root { --sidebar-width: 240px; }
-  .page-content { padding: 1.25rem 1.5rem; }
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .page-content {
+    padding: 1.25rem 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .dashboard-container { flex-direction: column; }
-  .sidebar { width: 100%; min-width: unset; height: auto; }
-  .charts-grid { grid-template-columns: 1fr; }
-  .grid-cards { grid-template-columns: 1fr 1fr; }
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+    height: auto;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-cards {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* =============================================
@@ -1423,7 +1478,9 @@ body {
   transition: color 0.2s ease;
 }
 
-.alert-panel-close:hover { color: var(--lumax-red); }
+.alert-panel-close:hover {
+  color: var(--lumax-red);
+}
 
 .alert-severity-row {
   display: flex;
@@ -1465,7 +1522,9 @@ body {
   transition: background 0.2s ease;
 }
 
-.alert-item:hover { background: var(--bg-card-hover); }
+.alert-item:hover {
+  background: var(--bg-card-hover);
+}
 
 .alert-item-header {
   display: flex;
@@ -1506,7 +1565,9 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.alert-item-link:hover { opacity: 0.75; }
+.alert-item-link:hover {
+  opacity: 0.75;
+}
 
 /* Light mode for alert panel */
 [data-theme="light"] .alert-panel {
@@ -1529,7 +1590,9 @@ body {
 
 /* ─── Responsive alert panel ─── */
 @media (max-width: 1200px) {
-  .alert-panel--open { width: 260px; }
+  .alert-panel--open {
+    width: 260px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1542,7 +1605,6 @@ body {
     z-index: 200;
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
   }
-}
 }
 
 /* ─── AI Insights & Alerts Styles ─── */
@@ -1564,7 +1626,9 @@ body {
 .ai-glow-border::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 2px;
   background: linear-gradient(90deg, #ef4444, #dc2626);
 }
@@ -1578,7 +1642,9 @@ body {
 .ai-glow-border-zap::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 2px;
   background: linear-gradient(90deg, #fde047, #eab308);
 }
@@ -1713,7 +1779,7 @@ body {
 
 [data-theme="light"] .alert-mini-grid {
   background: #f8f9fa;
-  border-color: rgba(0,0,0,0.08);
+  border-color: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="light"] .badge-gray {
