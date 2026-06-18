@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronRight, Zap, ArrowLeft, ArrowUpRight, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import KpiCard from '../components/KpiCard';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -8,6 +9,7 @@ export default function PartPriceVariance() {
   const [data, setData] = useState(null);
   const [role, setRole] = useState('Procurement Head'); // 'Procurement Head' or 'Category Manager'
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${API_BASE}/api/v1/ai-insights/part-price-variance`)
@@ -33,6 +35,12 @@ export default function PartPriceVariance() {
 
   return (
     <div className="ai-insight-page">
+      <div className="back-link-container">
+        <button className="back-button" onClick={() => navigate('/')}>
+          <ArrowLeft size={14} /> Back to Executive Summary
+        </button>
+      </div>
+
       <div className="page-title-block flex-between" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <h2><span className="page-title-accent ai-accent-zap" /><Zap size={24} style={{marginRight: 8, color: '#eab308'}}/>Part Price Variance Recommender</h2>

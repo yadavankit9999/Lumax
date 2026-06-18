@@ -1787,3 +1787,141 @@ body {
   color: #475569;
   border-color: #cbd5e1;
 }
+
+/* ─── AI Insight Card Summary Styling ─── */
+.insight-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-default);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.insight-card.clickable-card {
+  cursor: pointer;
+}
+
+.insight-card.clickable-card:hover {
+  transform: translateY(-3px);
+}
+
+.insight-card.ai-glow-border:hover {
+  box-shadow: 0 10px 25px rgba(222, 3, 3, 0.15), var(--shadow-card);
+  border-color: rgba(222, 3, 3, 0.6) !important;
+}
+
+.insight-card.ai-glow-border-zap:hover {
+  box-shadow: 0 10px 25px rgba(234, 179, 8, 0.15), var(--shadow-card);
+  border-color: rgba(234, 179, 8, 0.6) !important;
+}
+
+.insight-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.insight-sub {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+
+.insight-stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.25rem;
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mini-stat-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+.mini-stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.back-button:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-muted);
+  transform: translateX(-2px);
+}
+
+.back-link-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Light theme overrides for AI cards */
+[data-theme="light"] .insight-card {
+  background: var(--bg-card);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ─── AI Insight Filter Pills ─── */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-default);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+.filter-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.filter-label::after {
+  content: ':';
+}
+
+.filter-value {
+  color: var(--text-primary);
+  font-weight: 700;
+}

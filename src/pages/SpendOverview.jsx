@@ -131,7 +131,7 @@ export default function SpendOverview() {
               </div>
               <ChevronRight size={18} color="var(--text-muted)" />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+            <div className="insight-stats-container">
               <div className="mini-stat">
                 <span className="mini-stat-label">Sub-categories flagged</span>
                 <span className="mini-stat-value">{aiConsolidation.summary.flaggedCategories}</span>
@@ -162,7 +162,7 @@ export default function SpendOverview() {
               </div>
               <ChevronRight size={18} color="var(--text-muted)" />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+            <div className="insight-stats-container">
               <div className="mini-stat">
                 <span className="mini-stat-label">SKUs analysed</span>
                 <span className="mini-stat-value">{aiVariance.summary.skusAnalysed}</span>
